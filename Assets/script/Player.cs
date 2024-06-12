@@ -95,11 +95,15 @@ public class Player : MonoBehaviour
         if (LastObjectCollideName == "Entrer Maison")
         {
             this.gameObject.transform.position = new Vector3(-295.24f, 1.6f, 14.67f);
+            Maison.SetActive(true);
+            Rue.SetActive(false);
         }
 
         if (LastObjectCollideName == "Entrer Travail")
         {
             this.gameObject.transform.position = new Vector3(TravailInterieur.transform.position.x, 1.6f, TravailInterieur.transform.position.z);
+            Office.SetActive(true);
+            Rue.SetActive(false);
         }
 
         if (LastObjectCollideName == "Bureau 6")
@@ -113,6 +117,8 @@ public class Player : MonoBehaviour
         if (LastObjectCollideName == "Sortir Travail")
         {
             this.gameObject.transform.position = new Vector3(TravailExterieur.transform.position.x, 1.6f, TravailExterieur.transform.position.z);
+            Office.SetActive(false);
+            Rue.SetActive(true);
         }
 
         if (LastObjectCollideName == "Dormir")
