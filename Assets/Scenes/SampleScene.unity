@@ -3436,7 +3436,7 @@ GameObject:
   - component: {fileID: 574319167}
   - component: {fileID: 574319166}
   m_Layer: 0
-  m_Name: Bureau1
+  m_Name: Bureau 1
   m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4307,7 +4307,7 @@ GameObject:
   - component: {fileID: 689214026}
   - component: {fileID: 689214025}
   m_Layer: 0
-  m_Name: Sortir
+  m_Name: Sortir Travail
   m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4486,7 +4486,7 @@ GameObject:
   - component: {fileID: 696832746}
   - component: {fileID: 696832745}
   m_Layer: 0
-  m_Name: Bureau3
+  m_Name: Bureau 3
   m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4887,7 +4887,7 @@ GameObject:
   - component: {fileID: 752175921}
   - component: {fileID: 752175920}
   m_Layer: 0
-  m_Name: Bureau6
+  m_Name: Bureau 6
   m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5271,7 +5271,7 @@ GameObject:
   - component: {fileID: 788689094}
   - component: {fileID: 788689093}
   m_Layer: 0
-  m_Name: Bureau2
+  m_Name: Bureau 2
   m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8275,7 +8275,7 @@ GameObject:
   - component: {fileID: 1193904664}
   - component: {fileID: 1193904663}
   m_Layer: 0
-  m_Name: Audio Source
+  m_Name: Horloge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8385,12 +8385,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1193904662}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.03328705, y: -85.71492, z: 197.06148}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1886177139}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1197558943 stripped
 Transform:
@@ -9964,6 +9964,134 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d9b6581630ca8e546a519aa281a49a59, type: 3}
+--- !u!1 &1409365391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1409365392}
+  - component: {fileID: 1409365393}
+  m_Layer: 0
+  m_Name: Gresillement
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1409365392
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409365391}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.03328705, y: -85.71492, z: 197.06148}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1886177139}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1409365393
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409365391}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 884692be9a7211a4aa06a7b1b85a1df0, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1416946150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10156,7 +10284,7 @@ GameObject:
   - component: {fileID: 1440855477}
   - component: {fileID: 1440855476}
   m_Layer: 0
-  m_Name: Bureau4
+  m_Name: Bureau 4
   m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12428,7 +12556,7 @@ GameObject:
   - component: {fileID: 1710037799}
   - component: {fileID: 1710037798}
   m_Layer: 0
-  m_Name: Bureau5
+  m_Name: Bureau 5
   m_TagString: Interaction
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13519,6 +13647,39 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7012c89e35b9b31418542e5444ca704a, type: 3}
+--- !u!1 &1886177138
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1886177139}
+  m_Layer: 0
+  m_Name: Son
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1886177139
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886177138}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1193904664}
+  - {fileID: 1409365392}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1888286744 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4245003914043438275, guid: d9b6581630ca8e546a519aa281a49a59,
@@ -16183,9 +16344,29 @@ PrefabInstance:
       objectReference: {fileID: 1573964514}
     - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
         type: 3}
+      propertyPath: LitPlayer
+      value: 
+      objectReference: {fileID: 1036123439}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: BureauPlayer
+      value: 
+      objectReference: {fileID: 1440855474}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: Gresillement
+      value: 
+      objectReference: {fileID: 1409365393}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
       propertyPath: SortirMaison
       value: 
       objectReference: {fileID: 1570133013}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: TravailSortie
+      value: 
+      objectReference: {fileID: 689214023}
     - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
         type: 3}
       propertyPath: MaisonExterieur
@@ -16193,14 +16374,90 @@ PrefabInstance:
       objectReference: {fileID: 995300232}
     - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
         type: 3}
+      propertyPath: TravailExterieur
+      value: 
+      objectReference: {fileID: 961496036}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: TravailInterieur
+      value: 
+      objectReference: {fileID: 1193118279}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
       propertyPath: InteractionEcrire
       value: 
       objectReference: {fileID: 1295348723}
     - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
         type: 3}
+      propertyPath: MessageSecondaire
+      value: 
+      objectReference: {fileID: 8362627830199375932, guid: 6b75959e265ba7b43ac7b320f3d4b29c,
+        type: 3}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
       propertyPath: InterfaceInteraction
       value: 
       objectReference: {fileID: 1182448784}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: MessageAEcrireBadMoral.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: MessageAEcrireBonMoral.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: MessageAEcrireMoyenMoral.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: MessageAEcrireBadMoral.Array.data[0]
+      value: Travail... Dormir... Travail... Dormir...
+      objectReference: {fileID: 0}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: MessageAEcrireBadMoral.Array.data[1]
+      value: Tout est si fatiguant...
+      objectReference: {fileID: 0}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: MessageAEcrireBadMoral.Array.data[2]
+      value: J'en ai marre...
+      objectReference: {fileID: 0}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: MessageAEcrireBonMoral.Array.data[0]
+      value: "H\xE2te d'aller au boulot !"
+      objectReference: {fileID: 0}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: MessageAEcrireBonMoral.Array.data[1]
+      value: Il fait beau, c'est cool !
+      objectReference: {fileID: 0}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: MessageAEcrireBonMoral.Array.data[2]
+      value: Franchement, tout vas bien.
+      objectReference: {fileID: 0}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: MessageAEcrireMoyenMoral.Array.data[0]
+      value: Quotidien,Quotidien,Quotidien.
+      objectReference: {fileID: 0}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: MessageAEcrireMoyenMoral.Array.data[1]
+      value: "Au moins il pleut pas, c'est d\xE9j\xE0 \xE7a."
+      objectReference: {fileID: 0}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: MessageAEcrireMoyenMoral.Array.data[2]
+      value: Humph... Je resterai bien au lit la prochaine fois...
+      objectReference: {fileID: 0}
     - target: {fileID: 144089978299307727, guid: 83d10aabf3ee62c449b2bf997a6d1418,
         type: 3}
       propertyPath: m_IsTrigger
@@ -16720,5 +16977,5 @@ SceneRoots:
   - {fileID: 958440009}
   - {fileID: 1279450508}
   - {fileID: 1590688655}
-  - {fileID: 1193904664}
   - {fileID: 1806627715}
+  - {fileID: 1886177139}

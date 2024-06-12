@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.UI;
+using UnityEngine.XR;
 
 public class Player : MonoBehaviour
 {
@@ -17,11 +18,23 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject SortirMaison;
     [SerializeField] private GameObject MaisonExterieur;
     [SerializeField] private GameObject TravailExterieur;
+    [SerializeField] private GameObject TravailInterieur;
     [SerializeField] private GameObject BureauPlayer;
     [SerializeField] private GameObject TravailSortie;
     [SerializeField] private GameObject LitPlayer;
     [SerializeField] private float speed;
+    [SerializeField] private AudioSource Gresillement;
 
+
+    [SerializeField] private string[] MessageAEcrireBonMoral;
+    [SerializeField] private string[] MessageAEcrireMoyenMoral;
+    [SerializeField] private string[] MessageAEcrireBadMoral;
+
+    private int Moral = 0;
+
+    [SerializeField] private GameObject MessageSecondaire;
+
+    private float TempsAleatoire;
     private bool repos = false;
     private bool travail = true;
     private string LastObjectCollideName;
@@ -32,6 +45,8 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        TempsAleatoire = Random.RandomRange(5, 6);
+        Debug.Log(TempsAleatoire);
         playerInput = GetComponent<PlayerInput>();
         moving = playerInput.actions.FindAction("Move");
         InterfaceInteraction.SetActive(false);
@@ -42,6 +57,7 @@ public class Player : MonoBehaviour
     {
         movingPlayer();
         ObjectifFonction();
+        AffichageMessageRandom();
 
     }
 
@@ -69,7 +85,29 @@ public class Player : MonoBehaviour
 
         if (LastObjectCollideName == "Entrer Travail")
         {
-            this.gameObject.transform.position = new Vector3(-295.24f, 1.6f, 14.67f);
+            this.gameObject.transform.position = new Vector3(TravailInterieur.transform.position.x, 1.6f, TravailInterieur.transform.position.z);
+        }
+
+
+
+        if (LastObjectCollideName == "Bureau 6")
+        {
+            travail = false;
+            repos = true;
+            Gresillement.volume += 1;
+            Moral = Moral - 2;
+        }
+
+        if (LastObjectCollideName == "Sortir Travail")
+        {
+            this.gameObject.transform.position = new Vector3(TravailExterieur.transform.position.x, 1.6f, TravailExterieur.transform.position.z);
+        }
+
+        if (LastObjectCollideName == "Dormir")
+        {
+            travail = true;
+            repos = false;
+            Gresillement.volume += 1;
         }
     }
 
@@ -142,5 +180,57 @@ public class Player : MonoBehaviour
             Objectif.GetComponent<TMP_Text>().text = "Repos";
         }
     }
+
+
+
+    public void SpawnCommentaireSecondaire()
+    {
+        Instantiate(MessageSecondaire);
+
+    }
+
+
+    public void AffichageMessageRandom()
+    {
+        TempsAleatoire = TempsAleatoire - Time.deltaTime;
+
+        if( TempsAleatoire < 0 )
+        {
+            SpawnCommentaireSecondaire();
+
+            if (Moral >= 0)
+            {
+                // MessageSecondaire;
+
+                int Rand = UnityEngine.Random.Range(0, MessageAEcrireBonMoral.Length);
+
+                MessageSecondaire.GetComponent<TexteMessage>().EcrireMessage(MessageAEcrireBonMoral[Rand]);
+
+            }
+            if (Moral >= -5 && Moral < -1)
+            {
+                // MessageSecondaire;
+
+                int Rand = UnityEngine.Random.Range(0, MessageAEcrireMoyenMoral.Length);
+
+                MessageSecondaire.GetComponent<TexteMessage>().EcrireMessage(MessageAEcrireMoyenMoral[Rand]);
+
+            }
+            if (Moral >= -10 && Moral < -6)
+            {
+                // MessageSecondaire;
+
+                int Rand = UnityEngine.Random.Range(0, MessageAEcrireBadMoral.Length);
+
+                MessageSecondaire.GetComponent<TexteMessage>().EcrireMessage(MessageAEcrireBadMoral[Rand]);
+
+            }
+
+            TempsAleatoire = Random.RandomRange(5, 15);
+            Debug.Log(TempsAleatoire);
+
+        }
+    }
+
 
 }
