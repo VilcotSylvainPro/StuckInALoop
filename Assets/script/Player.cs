@@ -226,7 +226,7 @@ public class Player : MonoBehaviour
 
             }
 
-            TempsAleatoire = Random.RandomRange(5, 15);
+            TempsAleatoire = Random.RandomRange(0, 5);
             Debug.Log(TempsAleatoire);
 
         }

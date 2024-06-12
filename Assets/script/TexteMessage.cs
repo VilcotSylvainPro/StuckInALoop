@@ -14,8 +14,8 @@ public class TexteMessage : MonoBehaviour
     public void Start()
     {
 
-        float Randx = Random.RandomRange(-418, 408);
-        float Randy = Random.RandomRange(-200, 300);
+        float Randx = Random.RandomRange(500, 1000);
+        float Randy = Random.RandomRange(200, 400);
        Bouger(Randx, Randy, 0);
     }
 
