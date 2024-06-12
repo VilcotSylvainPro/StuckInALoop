@@ -24,16 +24,24 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject LitPlayer;
     [SerializeField] private float speed;
     [SerializeField] private AudioSource Gresillement;
+    [SerializeField] private GameObject Maison;
+    [SerializeField] private GameObject Rue;
+    [SerializeField] private GameObject Office;
 
 
     [SerializeField] private string[] MessageAEcrireBonMoral;
     [SerializeField] private string[] MessageAEcrireMoyenMoral;
     [SerializeField] private string[] MessageAEcrireBadMoral;
 
-    private int Moral = 0;
+    private int Moral = 4;
 
     [SerializeField] private GameObject MessageSecondaire;
+    [SerializeField] private GameObject InterractionMobilier;
+    [SerializeField] private GameObject InteractionEcrireMobilier;
+    [SerializeField] private GameObject MessageFinal;
+    private Transform finalBoutonTransform;
 
+    private GameObject canvas;
     private float TempsAleatoire;
     private bool repos = false;
     private bool travail = true;
@@ -45,7 +53,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        TempsAleatoire = Random.RandomRange(5, 6);
+        canvas = GameObject.Find("Canvas");
+        finalBoutonTransform = MessageFinal.transform;
+
+        TempsAleatoire = Random.RandomRange(5, 15);
         Debug.Log(TempsAleatoire);
         playerInput = GetComponent<PlayerInput>();
         moving = playerInput.actions.FindAction("Move");
@@ -76,6 +87,9 @@ public class Player : MonoBehaviour
         if(LastObjectCollideName == "Sortir Maison")
         {
             this.gameObject.transform.position = new Vector3(MaisonExterieur.transform.position.x, 1.6f, MaisonExterieur.transform.position.z);
+            Maison.SetActive(false);
+            Rue.SetActive(true);
+
         }
 
         if (LastObjectCollideName == "Entrer Maison")
@@ -88,13 +102,11 @@ public class Player : MonoBehaviour
             this.gameObject.transform.position = new Vector3(TravailInterieur.transform.position.x, 1.6f, TravailInterieur.transform.position.z);
         }
 
-
-
         if (LastObjectCollideName == "Bureau 6")
         {
             travail = false;
             repos = true;
-            Gresillement.volume += 1;
+            Gresillement.volume += 0.1f;
             Moral = Moral - 2;
         }
 
@@ -107,8 +119,59 @@ public class Player : MonoBehaviour
         {
             travail = true;
             repos = false;
-            Gresillement.volume += 1;
         }
+
+
+        if (LastObjectCollideName == "Regarder TV")
+        {
+            InterractionMobilier.SetActive(true);
+            InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "J'ai pas vraiment envie de regarder la télé.";
+
+        }
+
+        if (LastObjectCollideName == "Manger")
+        {
+            InterractionMobilier.SetActive(true);
+            InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "J'ai pas vraiment envie de manger actuellement.";
+
+        }
+
+        if (LastObjectCollideName == "Asseoir")
+        {
+            InterractionMobilier.SetActive(true);
+            InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "J'ai pas vraiment envie de m'asseoir devant la TV, prochaine fois.";
+        }
+
+        if (LastObjectCollideName == "Bureau 1")
+        {
+            InterractionMobilier.SetActive(true);
+            InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "Ce n'est pas mon bureau ici...";
+        }
+
+        if (LastObjectCollideName == "Bureau 2")
+        {
+            InterractionMobilier.SetActive(true);
+            InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "Ce n'est pas mon bureau ici...";
+        }
+
+        if (LastObjectCollideName == "Bureau 3")
+        {
+            InterractionMobilier.SetActive(true);
+            InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "Ce n'est pas mon bureau ici...";
+        }
+
+        if (LastObjectCollideName == "Bureau 4")
+        {
+            InterractionMobilier.SetActive(true);
+            InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "Ce n'est pas mon bureau ici...";
+        }
+
+        if (LastObjectCollideName == "Bureau 5")
+        {
+            InterractionMobilier.SetActive(true);
+            InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "Ce n'est pas mon bureau ici...";
+        }
+
     }
 
 
@@ -185,7 +248,9 @@ public class Player : MonoBehaviour
 
     public void SpawnCommentaireSecondaire()
     {
-        Instantiate(MessageSecondaire);
+       GameObject BoutonASpawn = Instantiate(MessageSecondaire);
+        BoutonASpawn.transform.parent = (canvas.transform);
+        BoutonASpawn.transform.SetSiblingIndex(finalBoutonTransform.GetSiblingIndex()-1);
 
     }
 
@@ -205,6 +270,7 @@ public class Player : MonoBehaviour
                 int Rand = UnityEngine.Random.Range(0, MessageAEcrireBonMoral.Length);
 
                 MessageSecondaire.GetComponent<TexteMessage>().EcrireMessage(MessageAEcrireBonMoral[Rand]);
+                TempsAleatoire = Random.RandomRange(5, 10);
 
             }
             if (Moral >= -5 && Moral < -1)
@@ -214,6 +280,8 @@ public class Player : MonoBehaviour
                 int Rand = UnityEngine.Random.Range(0, MessageAEcrireMoyenMoral.Length);
 
                 MessageSecondaire.GetComponent<TexteMessage>().EcrireMessage(MessageAEcrireMoyenMoral[Rand]);
+                TempsAleatoire = Random.RandomRange(5, 10);
+                Debug.Log(TempsAleatoire);
 
             }
             if (Moral >= -10 && Moral < -6)
@@ -223,11 +291,25 @@ public class Player : MonoBehaviour
                 int Rand = UnityEngine.Random.Range(0, MessageAEcrireBadMoral.Length);
 
                 MessageSecondaire.GetComponent<TexteMessage>().EcrireMessage(MessageAEcrireBadMoral[Rand]);
+                TempsAleatoire = Random.RandomRange(5, 5);
+                Debug.Log(TempsAleatoire);
+
+            }
+            if ( Moral <= -12)
+            {
+                // MessageSecondaire;
+
+                int Rand = UnityEngine.Random.Range(0, MessageAEcrireBadMoral.Length);
+
+                MessageSecondaire.GetComponent<TexteMessage>().EcrireMessage(MessageAEcrireBadMoral[Rand]);
+                //TempsAleatoire = Random.RandomRange(1, 1);
+                MessageFinal.SetActive(true);
+                Debug.Log(TempsAleatoire);
 
             }
 
-            TempsAleatoire = Random.RandomRange(0, 5);
-            Debug.Log(TempsAleatoire);
+
+
 
         }
     }
