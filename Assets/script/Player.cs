@@ -33,12 +33,16 @@ public class Player : MonoBehaviour
     [SerializeField] private string[] MessageAEcrireMoyenMoral;
     [SerializeField] private string[] MessageAEcrireBadMoral;
 
-    private int Moral = 4;
+    [SerializeField] private int Moral = 4;
 
     [SerializeField] private GameObject MessageSecondaire;
     [SerializeField] private GameObject InterractionMobilier;
     [SerializeField] private GameObject InteractionEcrireMobilier;
     [SerializeField] private GameObject MessageFinal;
+
+
+    [SerializeField] private GameObject[] GroupAPersonnage;
+    [SerializeField] private GameObject[] GroupBPersonnage;
     private Transform finalBoutonTransform;
 
     private GameObject canvas;
@@ -69,6 +73,7 @@ public class Player : MonoBehaviour
         movingPlayer();
         ObjectifFonction();
         AffichageMessageRandom();
+        LookPlayerObjectA();
 
     }
 
@@ -320,5 +325,28 @@ public class Player : MonoBehaviour
         }
     }
 
+
+    public void LookPlayerObjectA()
+    {
+        if(Moral < 0)
+        {
+            foreach(GameObject Objet in GroupAPersonnage)
+            {
+                Objet.transform.LookAt(this.gameObject.transform);
+            }
+        }
+        if (Moral < -6)
+        {
+            foreach (GameObject Objet in GroupAPersonnage)
+            {
+                Objet.transform.LookAt(this.gameObject.transform);
+            }
+
+            foreach (GameObject ObjetBis in GroupBPersonnage)
+            {
+                ObjetBis.transform.LookAt(this.gameObject.transform);
+            }
+        }
+    }
 
 }
