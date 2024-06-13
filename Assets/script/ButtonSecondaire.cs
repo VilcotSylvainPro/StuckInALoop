@@ -21,7 +21,18 @@ public class ButtonSecondaire : MonoBehaviour
 
     public void OnClickButton()
     {
+
+        //Supprimer le bouton
+
         Destroy(BoutonASupprimer);
+    }
+
+    public void OnClickApplicationEnd()
+    {
+
+        //Quitter le jeu
+
+        Application.Quit();
     }
 
 

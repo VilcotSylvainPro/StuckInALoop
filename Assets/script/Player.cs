@@ -6,6 +6,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine.XR;
+using System.Security.Cryptography;
 
 public class Player : MonoBehaviour
 {
@@ -24,21 +25,32 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject LitPlayer;
     [SerializeField] private float speed;
     [SerializeField] private AudioSource Gresillement;
+    [SerializeField] private AudioSource Horloge;
     [SerializeField] private GameObject Maison;
     [SerializeField] private GameObject Rue;
     [SerializeField] private GameObject Office;
+
+
+    [SerializeField] private string[] DialogueBonMoral;
+    [SerializeField] private string[] DialogueMoyenMoral;
 
 
     [SerializeField] private string[] MessageAEcrireBonMoral;
     [SerializeField] private string[] MessageAEcrireMoyenMoral;
     [SerializeField] private string[] MessageAEcrireBadMoral;
 
-    [SerializeField] private int Moral = 4;
+    [SerializeField] private int Depression = 4;
 
     [SerializeField] private GameObject MessageSecondaire;
     [SerializeField] private GameObject InterractionMobilier;
     [SerializeField] private GameObject InteractionEcrireMobilier;
     [SerializeField] private GameObject MessageFinal;
+    [SerializeField] private GameObject BoutonFinal;
+
+    [SerializeField] private GameObject EcranBoulot;
+    [SerializeField] private GameObject EcranDodo;
+
+
 
 
     [SerializeField] private GameObject[] GroupAPersonnage;
@@ -51,8 +63,10 @@ public class Player : MonoBehaviour
     private bool travail = true;
     private string LastObjectCollideName;
 
-    private bool InterractionGameplay;
     InputAction moving;
+
+
+
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +88,7 @@ public class Player : MonoBehaviour
         ObjectifFonction();
         AffichageMessageRandom();
         LookPlayerObjectA();
+       
 
     }
 
@@ -89,6 +104,10 @@ public class Player : MonoBehaviour
 
     public void Navigation()
     {
+
+        //Pour voyager d'une pièce à l'autre du jeu
+
+
         if(LastObjectCollideName == "Sortir Maison")
         {
             this.gameObject.transform.position = new Vector3(MaisonExterieur.transform.position.x, 1.6f, MaisonExterieur.transform.position.z);
@@ -115,21 +134,46 @@ public class Player : MonoBehaviour
         {
             travail = false;
             repos = true;
-            Gresillement.volume += 0.1f;
-            Moral = Moral - 2;
+            EcranBoulot.SetActive(true);
+
+            //Ici moral baisse et l'ambiance sonore augmente en volume graduellement
+
+            Gresillement.volume += 0.2f;
+            CameraShake.Instance.ShakeCamera(0.1f);
+            Horloge.volume += 0.2f;
+            Depression = Depression + 2;
         }
 
         if (LastObjectCollideName == "Sortir Travail")
         {
-            this.gameObject.transform.position = new Vector3(TravailExterieur.transform.position.x, 1.6f, TravailExterieur.transform.position.z);
-            Office.SetActive(false);
-            Rue.SetActive(true);
+            if( travail == false)
+            {
+                this.gameObject.transform.position = new Vector3(TravailExterieur.transform.position.x, 1.6f, TravailExterieur.transform.position.z);
+                Office.SetActive(false);
+                Rue.SetActive(true);
+            }
+            else
+            {
+                InterractionMobilier.SetActive(true);
+                InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "J'ai du travail...";
+            }
+
         }
 
         if (LastObjectCollideName == "Dormir")
         {
-            travail = true;
-            repos = false;
+            if(repos == true)
+            {
+                travail = true;
+                repos = false;
+                EcranDodo.SetActive(true);
+            }
+            else
+            {
+                InterractionMobilier.SetActive(true);
+                InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "J'ai pas vraiment sommeil.";
+            }
+
         }
 
 
@@ -183,6 +227,36 @@ public class Player : MonoBehaviour
             InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "Ce n'est pas mon bureau ici...";
         }
 
+         
+        if (LastObjectCollideName == "Inconnu")
+        {
+            if(Depression < 4)
+            {
+                InterractionMobilier.SetActive(true);
+
+                int Rand = UnityEngine.Random.Range(0, DialogueBonMoral.Length);
+
+                string MessageTempo = EcrireMessageIci(DialogueBonMoral[Rand]);
+                InteractionEcrireMobilier.GetComponent<TMP_Text>().text = MessageTempo;
+
+                //InteractionEcrireMobilier.GetComponent<TMP_Text>().EcrireMessageIci(MessageAEcrireMoyenMoral[Rand]);
+            }
+            else if (Depression >= 4 && Depression < 8)
+            {
+                InterractionMobilier.SetActive(true);
+
+                int Rand = UnityEngine.Random.Range(0, DialogueMoyenMoral.Length);
+
+                string MessageTempo = EcrireMessageIci(DialogueMoyenMoral[Rand]);
+                InteractionEcrireMobilier.GetComponent<TMP_Text>().text = MessageTempo;
+            }
+            else if (Depression >= 8)
+            {
+                InterractionMobilier.SetActive(true);
+                InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "...";
+            }
+        }
+
     }
 
 
@@ -192,15 +266,28 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "Interaction")
         {
+
+            //Détecter si on touche une interraction
+
             Debug.Log("Interraction");
             InterfaceInteraction.SetActive(true);
             SetLastCollideObjectName(other.name);
             InteractionEcrire.GetComponent<TMP_Text>().text = other.name;
-            InterractionGameplay = true;
             
 
 
-            //InteractionEcrire.GetComponent<TMP_Text>().text = "test";
+
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Interaction")
+        {
+            Debug.Log("Interraction");
+            InterfaceInteraction.SetActive(true);
+            SetLastCollideObjectName(collision.gameObject.name);
+            InteractionEcrire.GetComponent<TMP_Text>().text = collision.gameObject.name;
         }
     }
 
@@ -208,15 +295,16 @@ public class Player : MonoBehaviour
     {
         if (other.gameObject.tag == "Interaction")
         {
+            //Détecter si on reste sur une interraction
 
             Debug.Log("Interraction Continu");
-            InterractionGameplay = true;
-           /*if (other.gameObject == SortirMaison && Input.GetKeyDown(KeyCode.E))
-            {
-                Debug.Log("E appuyé");
-                this.gameObject.transform.position = MaisonExterieur.transform.position;
-            }*/
+
         }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        
     }
 
     private void OnTriggerExit(Collider other)
@@ -224,14 +312,38 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag == "Interaction")
         {
 
+            //Détecter si on quitte une interraction
+
+
+
             Debug.Log("Plus Interraction");
             InterfaceInteraction.SetActive(false);
-            InterractionGameplay = false;
+
+
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.tag == "Interaction")
+        {
+
+            //Détecter si on quitte une interraction
+
+
+
+            Debug.Log("Plus Interraction");
+            InterfaceInteraction.SetActive(false);
+
+
         }
     }
 
     public void SetLastCollideObjectName(string name)
     {
+        //Stocker le nom de la dernière collision pour l'afficher dans l'interface
+
+
         LastObjectCollideName = name;
         Debug.Log(LastObjectCollideName);
     }
@@ -245,7 +357,12 @@ public class Player : MonoBehaviour
 
     public void ObjectifFonction()
     {
-        if(travail == true)
+
+        //Affichage objectif du joueur en cours
+
+
+
+        if (travail == true)
         {
             Objectif.GetComponent<TMP_Text>().text = "Travail";
         }
@@ -259,7 +376,11 @@ public class Player : MonoBehaviour
 
     public void SpawnCommentaireSecondaire()
     {
-       GameObject BoutonASpawn = Instantiate(MessageSecondaire);
+
+        //Faire apparaitre les commentaires du personnage
+
+
+        GameObject BoutonASpawn = Instantiate(MessageSecondaire);
         BoutonASpawn.transform.parent = (canvas.transform);
         BoutonASpawn.transform.SetSiblingIndex(finalBoutonTransform.GetSiblingIndex()-1);
 
@@ -268,13 +389,17 @@ public class Player : MonoBehaviour
 
     public void AffichageMessageRandom()
     {
+
+        //Instantier les message sur un lapse de temps en dépendant du niveau de moral du joueur
+
+
         TempsAleatoire = TempsAleatoire - Time.deltaTime;
 
         if( TempsAleatoire < 0 )
         {
             SpawnCommentaireSecondaire();
 
-            if (Moral >= 0)
+            if (Depression >= 0 && Depression < 4)
             {
                 // MessageSecondaire;
 
@@ -284,29 +409,29 @@ public class Player : MonoBehaviour
                 TempsAleatoire = Random.RandomRange(5, 10);
 
             }
-            if (Moral >= -5 && Moral < -1)
+            if (Depression >= 4 && Depression < 8)
             {
                 // MessageSecondaire;
 
                 int Rand = UnityEngine.Random.Range(0, MessageAEcrireMoyenMoral.Length);
 
                 MessageSecondaire.GetComponent<TexteMessage>().EcrireMessage(MessageAEcrireMoyenMoral[Rand]);
-                TempsAleatoire = Random.RandomRange(5, 10);
+                TempsAleatoire = Random.RandomRange(4, 8);
                 Debug.Log(TempsAleatoire);
 
             }
-            if (Moral >= -10 && Moral < -6)
+            if (Depression >= 8 && Depression < 12)
             {
                 // MessageSecondaire;
 
                 int Rand = UnityEngine.Random.Range(0, MessageAEcrireBadMoral.Length);
 
                 MessageSecondaire.GetComponent<TexteMessage>().EcrireMessage(MessageAEcrireBadMoral[Rand]);
-                TempsAleatoire = Random.RandomRange(5, 5);
+                TempsAleatoire = Random.RandomRange(4, 6);
                 Debug.Log(TempsAleatoire);
 
             }
-            if ( Moral <= -12)
+            if ( Depression >= 12)
             {
                 // MessageSecondaire;
 
@@ -328,14 +453,17 @@ public class Player : MonoBehaviour
 
     public void LookPlayerObjectA()
     {
-        if(Moral < 0)
+
+        //Dépendant de son moral les gens vont observer le joueur ça se apsse ici #Paranoïa
+
+        if (Depression > 4)
         {
             foreach(GameObject Objet in GroupAPersonnage)
             {
                 Objet.transform.LookAt(this.gameObject.transform);
             }
         }
-        if (Moral < -6)
+        if (Depression > 8)
         {
             foreach (GameObject Objet in GroupAPersonnage)
             {
@@ -347,6 +475,23 @@ public class Player : MonoBehaviour
                 ObjetBis.transform.LookAt(this.gameObject.transform);
             }
         }
+
+
+
+       
+
     }
+
+
+
+    public string EcrireMessageIci(string message)
+    {
+
+        //Ecrire le message à afficher
+        return message;
+
+        
+    }
+
 
 }

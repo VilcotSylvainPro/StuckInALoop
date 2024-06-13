@@ -14,6 +14,8 @@ public class TexteMessage : MonoBehaviour
     public void Start()
     {
 
+        //Afficher à un endroit aléatoire entre les bornes x et y
+
         float Randx = Random.RandomRange(500, 1400);
         float Randy = Random.RandomRange(300, 850);
        Bouger(Randx, Randy, 0);
@@ -23,11 +25,17 @@ public class TexteMessage : MonoBehaviour
 
     public void EcrireMessage(string message)
     {
+
+        //Le message à écrire
+
         TextMessage.GetComponent<TMP_Text>().text = message;
     }
 
     public void Bouger(float x,float y,float z)
     {
+
+        //Placer le message
+
         ObjectAbOUGER.transform.position = new Vector3(x,y,z);
     }
 }

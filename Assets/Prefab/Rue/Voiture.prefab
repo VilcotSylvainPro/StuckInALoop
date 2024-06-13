@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6908648301375191254}
   - component: {fileID: 7726966404132818685}
   - component: {fileID: 113432278324535970}
+  - component: {fileID: 5374533751046566401}
   m_Layer: 0
   m_Name: Voiture
   m_TagString: Untagged
@@ -105,3 +106,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5374533751046566401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2156034170491905096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4007434a19dbe56498ee79bc85e58789, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  VitesseVoiture: 2
+  Voiture: {fileID: 2156034170491905096}
+  FinRoute: {fileID: 0}
+  FinRouteBis: {fileID: 0}
