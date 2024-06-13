@@ -50,8 +50,11 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject EcranBoulot;
     [SerializeField] private GameObject EcranDodo;
 
-
-
+    [SerializeField] private AudioSource Bruitage;
+    [SerializeField] private AudioClip Asenceur;
+    [SerializeField] private AudioClip SortieBureau;
+    [SerializeField] private AudioClip SortieMaison;
+    [SerializeField] private AudioClip EntreeMaison;
 
     [SerializeField] private GameObject[] GroupAPersonnage;
     [SerializeField] private GameObject[] GroupBPersonnage;
@@ -113,6 +116,7 @@ public class Player : MonoBehaviour
             this.gameObject.transform.position = new Vector3(MaisonExterieur.transform.position.x, 1.6f, MaisonExterieur.transform.position.z);
             Maison.SetActive(false);
             Rue.SetActive(true);
+            Bruitage.PlayOneShot(EntreeMaison);
 
         }
 
@@ -121,6 +125,7 @@ public class Player : MonoBehaviour
             this.gameObject.transform.position = new Vector3(-295.24f, 1.6f, 14.67f);
             Maison.SetActive(true);
             Rue.SetActive(false);
+            Bruitage.PlayOneShot(SortieMaison);
         }
 
         if (LastObjectCollideName == "Entrer Travail")
@@ -128,6 +133,7 @@ public class Player : MonoBehaviour
             this.gameObject.transform.position = new Vector3(TravailInterieur.transform.position.x, 1.6f, TravailInterieur.transform.position.z);
             Office.SetActive(true);
             Rue.SetActive(false);
+            Bruitage.PlayOneShot(Asenceur);
         }
 
         if (LastObjectCollideName == "Bureau 6")
@@ -151,6 +157,7 @@ public class Player : MonoBehaviour
                 this.gameObject.transform.position = new Vector3(TravailExterieur.transform.position.x, 1.6f, TravailExterieur.transform.position.z);
                 Office.SetActive(false);
                 Rue.SetActive(true);
+                Bruitage.PlayOneShot(SortieBureau);
             }
             else
             {
