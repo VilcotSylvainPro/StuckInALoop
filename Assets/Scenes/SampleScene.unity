@@ -2486,6 +2486,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3350,6 +3355,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3509,6 +3519,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (20)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5805,6 +5820,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (30)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5952,6 +5972,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (21)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6849,6 +6874,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7336,6 +7366,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (27)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8866,6 +8901,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9120,7 +9160,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 718740306}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SolEnsemble
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9273,6 +9313,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10679,6 +10724,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11608,6 +11658,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11811,6 +11866,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (24)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13593,6 +13653,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14078,6 +14143,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14396,6 +14466,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14840,6 +14915,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (26)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15672,6 +15752,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (31)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16766,6 +16851,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (17)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16935,6 +17025,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (18)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17392,6 +17487,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17533,6 +17633,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (29)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18068,6 +18173,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (22)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20446,6 +20556,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21009,6 +21124,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21807,6 +21927,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (25)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22633,6 +22758,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (16)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22769,6 +22899,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -22836,6 +22971,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (28)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -25734,6 +25874,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (19)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -26943,6 +27088,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol (23)
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27820,6 +27970,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sol (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -29227,6 +29382,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sol
       objectReference: {fileID: 0}
+    - target: {fileID: 8342106964040725306, guid: fca6d448242b15b488e31deeff011f7c,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29383,6 +29543,11 @@ PrefabInstance:
       objectReference: {fileID: 755089384}
     - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
         type: 3}
+      propertyPath: Force
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
       propertyPath: Moral
       value: -6
       objectReference: {fileID: 0}
@@ -29416,6 +29581,11 @@ PrefabInstance:
       propertyPath: Horloge
       value: 
       objectReference: {fileID: 1193904663}
+    - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
+        type: 3}
+      propertyPath: UpForce
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: -4270609318366314489, guid: 83d10aabf3ee62c449b2bf997a6d1418,
         type: 3}
       propertyPath: Asenceur
