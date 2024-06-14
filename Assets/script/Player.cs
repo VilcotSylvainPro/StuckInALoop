@@ -10,7 +10,7 @@ using System.Security.Cryptography;
 
 public class Player : MonoBehaviour
 {
-
+    private 
 
     PlayerInput playerInput;
     [SerializeField] private GameObject Objectif;
@@ -68,8 +68,30 @@ public class Player : MonoBehaviour
 
     InputAction moving;
 
+    [SerializeField] private CharacterController CharacterController;
+    private Vector2 direction;
+    private bool TimerDeadActivation = false;
+    private float TimerDead = 0f;
+    [SerializeField] private bool Dead = false;
+    private Vector3 SpawnPosition = Vector3.zero;
 
+    [SerializeField] private CharacterController GroundController;
+    [SerializeField] private Vector3 GroundForce = Vector3.zero;
+    [SerializeField] private float Gravity;
+    private bool InJump = false;
 
+    private bool CanDepressOther = false;
+    private bool Shoot = false;
+    [SerializeField] private Transform DepressionGrenadeSpawn;
+    [SerializeField] private GameObject DepressionGrenade;
+    [SerializeField] private GameObject Grenade;
+    [SerializeField] private float Force;
+    [SerializeField] private float UpForce;
+
+    private Vector2 CursorPositionVector = Vector2.zero;
+
+    [SerializeField] private GameObject[] ObjectsToRotate;
+    private int NbVictim = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -82,42 +104,132 @@ public class Player : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         moving = playerInput.actions.FindAction("Move");
         InterfaceInteraction.SetActive(false);
+        SpawnPosition = transform.position;
     }
 
     // Update is called once per frame
     void Update()
     {
-        movingPlayer();
+        //movingPlayer();
         ObjectifFonction();
         AffichageMessageRandom();
         LookPlayerObjectA();
        
+        if (Dead)
+        {
+            Respawn(SpawnPosition);
+        }
 
+        CharacterController.Move(new Vector3(direction.x, 0, direction.y) * speed * Time.deltaTime);
+
+        Debug.Log("Is grounded " + GroundController.isGrounded);
+
+        if (!GroundController.isGrounded && GroundForce.y > -0.25f && !InJump)
+        {
+            GroundForce.y -= Gravity * Time.deltaTime;
+        }
+        else if (InJump && GroundForce.y < 3)
+        {
+            GroundForce.y = 0 + Gravity * Time.deltaTime;
+        }
+
+        GroundController.Move(GroundForce);
+
+        if (TimerDeadActivation)
+        {
+            TimerDead += Time.deltaTime;
+            if (TimerDead > 3f)
+            {
+                Dead = true;
+            }
+        }
+
+        if (Depression >= 2)
+        {
+            CanDepressOther = true;
+        }
+
+        if (Shoot)
+        {
+            if (Grenade == null)
+            {
+                Grenade = Instantiate(DepressionGrenade, DepressionGrenadeSpawn.position, Quaternion.identity);
+                Grenade.transform.rotation = transform.rotation;
+                Grenade.transform.GetChild(0).GetComponent<DepressionGrenade>().SetPlayer(this);
+                Grenade.GetComponent<Rigidbody>().AddForce(0, UpForce, Force);
+            }
+        }
+
+        if (!InterractionMobilier.activeSelf && !EcranBoulot.activeSelf && !EcranDodo.activeSelf)
+        {
+            CharacterController.enabled = true;
+        }
+
+        Debug.Log("Cursor Position " + CursorPositionVector);
+
+        Ray ray = Camera.main.ScreenPointToRay(CursorPositionVector);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit)) 
+        {
+            foreach (GameObject ObjectToRotate in ObjectsToRotate)
+            {
+                ObjectToRotate.transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
+            }
+        }
     }
 
 
-    public void movingPlayer()
+    public Vector2 movingPlayer(Vector2 Direction)
     {
-        Vector2 direction = moving.ReadValue<Vector2>();
-        transform.position = transform.position + new Vector3(direction.x,0,direction.y) * speed * Time.deltaTime;
+        //Vector2 direction = moving.ReadValue<Vector2>();
+        //transform.position = transform.position + new Vector3(direction.x,0,direction.y) * speed * Time.deltaTime;
+        //CharacterController.Move(new Vector3(direction.x, 0, direction.y) * speed * Time.deltaTime);
+        direction = Direction;
+        return direction;
     }
 
+    public void Jump(bool State)
+    {
+        InJump = State;
+    }
 
+    public void DepressionGunShot(bool State)
+    {
+        if (CanDepressOther)
+        {
+            Shoot = State;
+        }
+    }
 
+    public void CursorPosition(Vector2 CursorPosition)
+    {
+        CursorPositionVector = CursorPosition;
+    }
+
+    public void SetDepression(int value)
+    {
+        if (Depression > 0)
+        {
+            Depression -= value;
+        }
+    }
 
     public void Navigation()
     {
 
         //Pour voyager d'une pièce à l'autre du jeu
+        CharacterController.enabled = false;
 
-
-        if(LastObjectCollideName == "Sortir Maison")
+        if (LastObjectCollideName == "Sortir Maison")
         {
             this.gameObject.transform.position = new Vector3(MaisonExterieur.transform.position.x, 1.6f, MaisonExterieur.transform.position.z);
             Maison.SetActive(false);
             Rue.SetActive(true);
             Bruitage.PlayOneShot(EntreeMaison);
-
+            if (this.gameObject.transform.position == new Vector3(MaisonExterieur.transform.position.x, 1.6f, MaisonExterieur.transform.position.z))
+            {
+                CharacterController.enabled = true;
+            }
         }
 
         if (LastObjectCollideName == "Entrer Maison")
@@ -126,6 +238,10 @@ public class Player : MonoBehaviour
             Maison.SetActive(true);
             Rue.SetActive(false);
             Bruitage.PlayOneShot(SortieMaison);
+            if (this.gameObject.transform.position == new Vector3(-295.24f, 1.6f, 14.67f))
+            {
+                CharacterController.enabled = true;
+            }
         }
 
         if (LastObjectCollideName == "Entrer Travail")
@@ -134,6 +250,10 @@ public class Player : MonoBehaviour
             Office.SetActive(true);
             Rue.SetActive(false);
             Bruitage.PlayOneShot(Asenceur);
+            if (this.gameObject.transform.position == new Vector3(TravailInterieur.transform.position.x, 1.6f, TravailInterieur.transform.position.z))
+            {
+                CharacterController.enabled = true;
+            }
         }
 
         if (LastObjectCollideName == "Bureau 6")
@@ -158,6 +278,10 @@ public class Player : MonoBehaviour
                 Office.SetActive(false);
                 Rue.SetActive(true);
                 Bruitage.PlayOneShot(SortieBureau);
+                if (this.gameObject.transform.position == new Vector3(TravailExterieur.transform.position.x, 1.6f, TravailExterieur.transform.position.z))
+                {
+                    CharacterController.enabled = true;
+                }
             }
             else
             {
@@ -188,14 +312,12 @@ public class Player : MonoBehaviour
         {
             InterractionMobilier.SetActive(true);
             InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "J'ai pas vraiment envie de regarder la télé.";
-
         }
 
         if (LastObjectCollideName == "Manger")
         {
             InterractionMobilier.SetActive(true);
             InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "J'ai pas vraiment envie de manger actuellement.";
-
         }
 
         if (LastObjectCollideName == "Asseoir")
@@ -295,6 +417,16 @@ public class Player : MonoBehaviour
             InterfaceInteraction.SetActive(true);
             SetLastCollideObjectName(collision.gameObject.name);
             InteractionEcrire.GetComponent<TMP_Text>().text = collision.gameObject.name;
+        }
+
+        if (collision.gameObject.GetComponent<DeplementVoiture>())
+        {
+            CharacterController.enabled = false;
+            TimerDeadActivation = true;
+            if (TimerDead > 3f)
+            {
+                Dead = true;
+            }
         }
     }
 
@@ -500,5 +632,25 @@ public class Player : MonoBehaviour
         
     }
 
+    public void Respawn(Vector3 Position)
+    {
+        transform.position = Position;
+        if (transform.position == Position)
+        {
+            CharacterController.enabled = true;
+        }
+        Dead = false;
+        TimerDeadActivation = false;
+        TimerDead = 0f;
+    }
 
+    public void SetCharacterController(bool State)
+    {
+        CharacterController.enabled = State;
+    }
+
+    public void SetNbVictim(int value)
+    {
+        NbVictim += value;
+    }
 }

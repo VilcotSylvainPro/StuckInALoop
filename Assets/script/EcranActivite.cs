@@ -5,9 +5,7 @@ using TMPro;
 
 public class EcranActivite : MonoBehaviour
 {
-
-
-
+    private Player PlayerScript;
     [SerializeField] private string[] MessageAffichage;
     [SerializeField] private GameObject MessageEcran;
     [SerializeField] private GameObject Music;
@@ -16,7 +14,7 @@ public class EcranActivite : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        PlayerScript = GameObject.Find("Player").GetComponent<Player>();
     }
 
 
@@ -44,8 +42,7 @@ public class EcranActivite : MonoBehaviour
             Debug.Log("Attendre = " + attendre);
             Music.SetActive (false);
             this.gameObject.SetActive(false);
-
-            
+            PlayerScript.SetCharacterController(true);   
         }
     }
 

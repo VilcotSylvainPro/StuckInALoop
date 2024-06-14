@@ -11,6 +11,9 @@ public class TexteMessage : MonoBehaviour
 
     [SerializeField] private GameObject ObjectAbOUGER;
 
+    private float TimerDespawn = 0f;
+    [SerializeField] private float TimeToDespawn = 5f;
+
     public void Start()
     {
 
@@ -21,7 +24,17 @@ public class TexteMessage : MonoBehaviour
        Bouger(Randx, Randy, 0);
     }
 
-
+    void Update()
+    {
+        if (this.isActiveAndEnabled)
+        {
+            TimerDespawn += Time.deltaTime;
+            if (TimerDespawn > TimeToDespawn)
+            {
+                Destroy(this.gameObject);
+            }
+        }
+    }
 
     public void EcrireMessage(string message)
     {
