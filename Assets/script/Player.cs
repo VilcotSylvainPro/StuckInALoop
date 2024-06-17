@@ -39,6 +39,8 @@ public class Player : MonoBehaviour
     [SerializeField] private string[] MessageAEcrireMoyenMoral;
     [SerializeField] private string[] MessageAEcrireBadMoral;
 
+    [SerializeField] private GameObject MessageParadis;
+
     [SerializeField] private int Depression = 4;
 
     [SerializeField] private GameObject MessageSecondaire;
@@ -70,13 +72,14 @@ public class Player : MonoBehaviour
 
     [SerializeField] private CharacterController CharacterController;
     private Vector2 direction;
-    private bool TimerDeadActivation = false;
-    private float TimerDead = 0f;
+    [SerializeField] private bool TimerDeadActivation = false;
+    [SerializeField] private float TimerDead = 0f;
     [SerializeField] private bool Dead = false;
     private Vector3 SpawnPosition = Vector3.zero;
 
     [SerializeField] private CharacterController GroundController;
     [SerializeField] private Vector3 GroundForce = Vector3.zero;
+    [SerializeField] private Rigidbody Rigidbody;
     [SerializeField] private float Gravity;
     private bool InJump = false;
 
@@ -92,6 +95,9 @@ public class Player : MonoBehaviour
 
     [SerializeField] private GameObject[] ObjectsToRotate;
     private int NbVictim = 0;
+    private int MaxVictime = 5;
+
+    [SerializeField] private CameraShake CamShake;
 
     // Start is called before the first frame update
     void Start()
@@ -115,16 +121,19 @@ public class Player : MonoBehaviour
         AffichageMessageRandom();
         LookPlayerObjectA();
        
-        if (Dead)
+        if (Dead || NbVictim > MaxVictime)
         {
             Respawn(SpawnPosition);
         }
 
-        CharacterController.Move(new Vector3(direction.x, 0, direction.y) * speed * Time.deltaTime);
+        if (CharacterController.enabled)
+        {
+            CharacterController.Move(new Vector3(direction.x, 0, direction.y) * speed * Time.deltaTime);
+        }
 
         Debug.Log("Is grounded " + GroundController.isGrounded);
 
-        if (!GroundController.isGrounded && GroundForce.y > -0.25f && !InJump)
+        if (!GroundController.isGrounded && GroundForce.y > -0.05f && !InJump)
         {
             GroundForce.y -= Gravity * Time.deltaTime;
         }
@@ -133,10 +142,15 @@ public class Player : MonoBehaviour
             GroundForce.y = 0 + Gravity * Time.deltaTime;
         }
 
-        GroundController.Move(GroundForce);
+        if (GroundController.enabled)
+        {
+            GroundController.Move(GroundForce);
+        }
 
         if (TimerDeadActivation)
         {
+            CharacterController.enabled = false;
+            GroundController.enabled = false;
             TimerDead += Time.deltaTime;
             if (TimerDead > 3f)
             {
@@ -154,13 +168,12 @@ public class Player : MonoBehaviour
             if (Grenade == null)
             {
                 Grenade = Instantiate(DepressionGrenade, DepressionGrenadeSpawn.position, Quaternion.identity);
-                Grenade.transform.rotation = transform.rotation;
                 Grenade.transform.GetChild(0).GetComponent<DepressionGrenade>().SetPlayer(this);
-                Grenade.GetComponent<Rigidbody>().AddForce(0, UpForce, Force);
+                Grenade.GetComponent<Rigidbody>().AddForce(transform.GetChild(0).transform.forward.x * Force * Time.deltaTime, UpForce * Time.deltaTime, transform.GetChild(0).transform.forward.z * Force * Time.deltaTime, ForceMode.Impulse);
             }
         }
 
-        if (!InterractionMobilier.activeSelf && !EcranBoulot.activeSelf && !EcranDodo.activeSelf)
+        if (!InterractionMobilier.activeSelf && !EcranBoulot.activeSelf && !EcranDodo.activeSelf && !TimerDeadActivation)
         {
             CharacterController.enabled = true;
         }
@@ -175,6 +188,13 @@ public class Player : MonoBehaviour
             {
                 ObjectToRotate.transform.LookAt(new Vector3(hit.point.x, transform.position.y, hit.point.z));
             }
+        }
+
+        if (this.transform.position.y > 100)
+        {
+            TimerDeadActivation = true;
+            CamShake.ChangeCameraRotation(2);
+            MessageParadis.SetActive(true);
         }
     }
 
@@ -402,10 +422,6 @@ public class Player : MonoBehaviour
             InterfaceInteraction.SetActive(true);
             SetLastCollideObjectName(other.name);
             InteractionEcrire.GetComponent<TMP_Text>().text = other.name;
-            
-
-
-
         }
     }
 
@@ -422,11 +438,9 @@ public class Player : MonoBehaviour
         if (collision.gameObject.GetComponent<DeplementVoiture>())
         {
             CharacterController.enabled = false;
+            GroundController.enabled = false;
+            Rigidbody.AddForce((transform.position - collision.transform.position) * 500 * Time.deltaTime, ForceMode.Impulse);
             TimerDeadActivation = true;
-            if (TimerDead > 3f)
-            {
-                Dead = true;
-            }
         }
     }
 
@@ -582,13 +596,8 @@ public class Player : MonoBehaviour
                 Debug.Log(TempsAleatoire);
 
             }
-
-
-
-
         }
     }
-
 
     public void LookPlayerObjectA()
     {
@@ -614,14 +623,7 @@ public class Player : MonoBehaviour
                 ObjetBis.transform.LookAt(this.gameObject.transform);
             }
         }
-
-
-
-       
-
     }
-
-
 
     public string EcrireMessageIci(string message)
     {
@@ -634,14 +636,18 @@ public class Player : MonoBehaviour
 
     public void Respawn(Vector3 Position)
     {
+        CamShake.ResetCameraRotation();
+        MessageParadis.SetActive(false);
         transform.position = Position;
         if (transform.position == Position)
         {
             CharacterController.enabled = true;
         }
-        Dead = false;
         TimerDeadActivation = false;
+        MaxVictime += 2;
+        NbVictim = 0;
         TimerDead = 0f;
+        Dead = false;
     }
 
     public void SetCharacterController(bool State)

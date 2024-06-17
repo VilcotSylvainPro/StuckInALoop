@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class UnkwonwPeople : MonoBehaviour
 {
-    private bool Depressed = false;
-    private bool Dead = false;
-    private bool Explosed = false;
+    [SerializeField] private bool Depressed = false;
+    [SerializeField] private bool Dead = false;
+    [SerializeField] private bool Explosed = false;
 
-    private GameObject ExplosionDeadVFX;
+    [SerializeField] private GameObject ExplosionDeadVFX;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        ExplosionDeadVFX.SetActive(false);
     }
 
     // Update is called once per frame
@@ -21,9 +21,16 @@ public class UnkwonwPeople : MonoBehaviour
     {
         if (Dead)
         {
+            for (int i = 0; i < ExplosionDeadVFX.transform.childCount; i++)
+            {
+                if (ExplosionDeadVFX.transform.GetChild(1).transform.GetChild(i).GetComponent<ParticleSystem>().isStopped)
+                {
+                    Explosed = true;
+                }
+            }
             if (Explosed)
             {
-                Destroy(this.gameObject);
+                Destroy(this.transform.parent.gameObject);
             }
         }
         else
@@ -43,31 +50,27 @@ public class UnkwonwPeople : MonoBehaviour
             {
                 for (int i = 0; i < ExplosionDeadVFX.transform.childCount; i++)
                 {
-                    if (ExplosionDeadVFX.transform.GetChild(i).GetComponent<ParticleSystem>())
+                    if (ExplosionDeadVFX.transform.GetChild(1).transform.GetChild(i).GetComponent<ParticleSystem>())
                     {
-                        ExplosionDeadVFX.transform.GetChild(i).GetComponent<ParticleSystem>().Play();
+                        ExplosionDeadVFX.SetActive(true);
+                        ExplosionDeadVFX.transform.GetChild(1).transform.GetChild(i).GetComponent<ParticleSystem>().Play();
+                        Dead = true;
                     }
                 }
             }
         }
     }
 
-    public void OnCollisionEnter(Collision collision)
+    public void SetDepressed(bool state)
     {
-        if (collision.gameObject.GetComponent<DepressionGrenade>() != null)
-        {
-            if (!Dead && !Depressed)
-            {
-                Depressed = true;
-            }
-        }
+        Depressed = state;
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<DepressionGrenade>() != null)
+        if (other.gameObject.layer == 9)
         {
-            if (!Dead && !Depressed)
+            if (other.GetComponent<DepressionGrenade>() != null)
             {
                 Depressed = true;
             }

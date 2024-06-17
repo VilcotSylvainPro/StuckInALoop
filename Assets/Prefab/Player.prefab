@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2309937482480454205}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 1.5}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -315,10 +315,12 @@ MonoBehaviour:
   Dead: 0
   GroundController: {fileID: 7805827721643018440}
   GroundForce: {x: 0, y: 0, z: 0}
+  Rigidbody: {fileID: 3515129840946217371}
   Gravity: 5
   DepressionGrenadeSpawn: {fileID: 2213918178490623493}
   DepressionGrenade: {fileID: 1737688498297495473, guid: b89ecaf7ae1fd1045a97f5c7e3e5a26a,
     type: 3}
+  Grenade: {fileID: 0}
   Force: 10
   UpForce: 2
   ObjectsToRotate:

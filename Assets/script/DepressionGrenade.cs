@@ -11,7 +11,9 @@ public class DepressionGrenade : MonoBehaviour
     [SerializeField] private Collider DepressionGrenadeCloud;
     [SerializeField] private GameObject DepressionGrenadeCloudVFX;
 
-    private Vector3 Direction = Vector3.zero;
+    [SerializeField] private Vector3 PositionExplosion = Vector3.zero;
+
+    [SerializeField] private LayerMask GroundLayer;
 
     // Start is called before the first frame update
     void Start()
@@ -30,50 +32,50 @@ public class DepressionGrenade : MonoBehaviour
         Player = player;
     }
 
-    public void Explosion()
+    public void Explosion(Vector3 Position)
     {
-        for (int i = 0; i < DepressionGrenadeExplosionVFX.transform.childCount; i++) 
-        {
-            DepressionGrenadeExplosionVFX.transform.GetChild(i).GetComponent<ParticleSystem>().Play();
-        }
+        Instantiate(DepressionGrenadeExplosionVFX, Position, Quaternion.identity);
+        StartCoroutine(CloudExpansion(Position));
     }
 
-    public void Cloud()
+    public void Cloud(Vector3 Position)
     {
-        StartCoroutine(CloudExpansion());
+        StartCoroutine(CloudExpansion(Position));
     }
 
-    public void OnCollisionEnter(Collision collision)
+    public void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.GetComponent<UnkwonwPeople>())
+
+        if (other.gameObject.layer == 8)
         {
+            other.GetComponent<UnkwonwPeople>().SetDepressed(true);
             Player.SetDepression(1);
             Player.SetNbVictim(1);
+
+            Explosion(other.gameObject.transform.position);
         }
 
-        if (collision.gameObject.layer == 7)
+        if (other.gameObject.layer == 7)
         {
-            //Destroy(this.transform.parent.gameObject);
-        }
-    }
-
-    IEnumerator CloudExpansion()
-    {
-        if (DepressionGrenadeCloud.bounds.size.x < 3)
-        {
-            for (int i = 0; i < DepressionGrenadeCloudVFX.transform.childCount; i++)
+            Ray ray = new Ray(transform.position, -transform.up);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 1f, GroundLayer))
             {
-                DepressionGrenadeCloudVFX.transform.GetChild(i).GetComponent<ParticleSystem>().Play();
+                Debug.DrawRay(ray.origin, ray.direction);
+                Explosion(hit.point);
             }
         }
-
-        yield return new WaitForSeconds(2f);
-
-        Destroy(this.transform.parent.gameObject);
     }
 
-    public void SetDirection(Vector3 direction)
+    IEnumerator CloudExpansion(Vector3 Position)
     {
-        Direction = direction;
+        yield return new WaitForSeconds(3f);
+
+        GameObject DepressionCloudVFX = Instantiate(DepressionGrenadeCloudVFX, Position, Quaternion.identity);
+        DepressionCloudVFX.transform.GetChild(0).GetComponent<GrenadeGasVFX>().SetPlayerScript(Player);
+
+        yield return new WaitForSeconds(0.5f);
+
+        Destroy(this.transform.parent.gameObject);
     }
 }

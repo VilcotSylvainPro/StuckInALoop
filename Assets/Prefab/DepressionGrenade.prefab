@@ -125,7 +125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1046534461738580721}
   - component: {fileID: 3773496375785989863}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CloudCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,11 +162,11 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1600243929609335073
 GameObject:
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 3417881605515220796}
   - component: {fileID: 1736130774819411979}
   - component: {fileID: 8402938794731165683}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Gameplay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -218,7 +218,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -263,9 +263,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8e907413e37118489660b957e3c9e36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DepressionGrenadeExplosionVFX: {fileID: 0}
-  DepressionGrenadeCloud: {fileID: 0}
-  DepressionGrenadeCloudVFX: {fileID: 0}
+  DepressionGrenadeExplosionVFX: {fileID: 5802645905946212307, guid: 88178aa518be0f74aaaed42b2fab947d,
+    type: 3}
+  DepressionGrenadeCloud: {fileID: 3417881605515220796}
+  DepressionGrenadeCloudVFX: {fileID: 7273363784818360505, guid: 7f4074906a4b80640a6010e6ce7fbc04,
+    type: 3}
+  PositionExplosion: {x: 0, y: 0, z: 0}
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1 &1737688498297495473
 GameObject:
   m_ObjectHideFlags: 0
@@ -316,7 +322,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
