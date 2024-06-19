@@ -28,10 +28,14 @@ public class InputManager : MonoBehaviour
     {
         if (this.enabled)
         {
-
+            Direction = context.ReadValue<Vector2>();
+            GameManager.Move(Direction);
         }
-        Direction = context.ReadValue<Vector2>();
-        GameManager.Move(Direction);
+        else
+        {
+            Direction = new Vector2 (0,0);
+        }
+
     }
 
     public void Jump(InputAction.CallbackContext context)

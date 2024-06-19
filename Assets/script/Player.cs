@@ -15,12 +15,18 @@ public class Player : MonoBehaviour
 
     PlayerInput playerInput;
     [SerializeField] private GameObject Objectif;
+    [SerializeField] private GameObject PlayerObject;
     [SerializeField] private GameObject InterfaceInteraction;
     [SerializeField] private GameObject InteractionEcrire;
     [SerializeField] private GameObject SortirMaison;
     [SerializeField] private GameObject MaisonExterieur;
     [SerializeField] private GameObject TravailExterieur;
     [SerializeField] private GameObject TravailInterieur;
+    [SerializeField] private GameObject[] Inconnus;
+    [SerializeField] private string[,] Dialogues;
+    [SerializeField] private GameObject Telephone;
+    [SerializeField] private GameObject Demenager;
+    [SerializeField] private GameObject NouveauTravail;
     [SerializeField] private GameObject BureauPlayer;
     [SerializeField] private GameObject TravailSortie;
     [SerializeField] private GameObject LitPlayer;
@@ -138,6 +144,7 @@ public class Player : MonoBehaviour
             CharacterController.Move(new Vector3(direction.x, 0, direction.y) * speed * Time.deltaTime);
         }
 
+
         Debug.Log("Is grounded " + GroundController.isGrounded);
 
         if (!GroundController.isGrounded && GroundForce.y > -0.05f && !InJump && !END)
@@ -183,9 +190,8 @@ public class Player : MonoBehaviour
         if (!InterractionMobilier.activeSelf && !EcranBoulot.activeSelf && !EcranDodo.activeSelf && !TimerDeadActivation)
         {
             CharacterController.enabled = true;
+            Input_Manager.enabled = true;
         }
-
-        Debug.Log("Cursor Position " + CursorPositionVector);
 
         Ray ray = Camera.main.ScreenPointToRay(CursorPositionVector);
         RaycastHit hit;
@@ -245,22 +251,25 @@ public class Player : MonoBehaviour
     {
 
         //Pour voyager d'une pièce à l'autre du jeu
-        CharacterController.enabled = false;
-
+        Input_Manager.enabled = false;
         if (LastObjectCollideName == "Sortir Maison")
         {
-            this.gameObject.transform.position = new Vector3(MaisonExterieur.transform.position.x, 1.6f, MaisonExterieur.transform.position.z);
+            CharacterController.enabled = false;
+            PlayerObject.transform.position = new Vector3(MaisonExterieur.transform.position.x, 1.6f, MaisonExterieur.transform.position.z);
+            Debug.Log(PlayerObject.transform.position);
             Maison.SetActive(false);
             Rue.SetActive(true);
             Bruitage.PlayOneShot(EntreeMaison);
-            if (this.gameObject.transform.position == new Vector3(MaisonExterieur.transform.position.x, 1.6f, MaisonExterieur.transform.position.z))
+            if (PlayerObject.transform.position == new Vector3(MaisonExterieur.transform.position.x, 1.6f, MaisonExterieur.transform.position.z))
             {
                 CharacterController.enabled = true;
+                Input_Manager.enabled = true;
             }
         }
 
         if (LastObjectCollideName == "Entrer Maison")
         {
+            CharacterController.enabled = false;
             this.gameObject.transform.position = new Vector3(-295.24f, 1.6f, 14.67f);
             Maison.SetActive(true);
             Rue.SetActive(false);
@@ -268,11 +277,13 @@ public class Player : MonoBehaviour
             if (this.gameObject.transform.position == new Vector3(-295.24f, 1.6f, 14.67f))
             {
                 CharacterController.enabled = true;
+                Input_Manager.enabled = true;
             }
         }
 
         if (LastObjectCollideName == "Entrer Travail")
         {
+            CharacterController.enabled = false;
             this.gameObject.transform.position = new Vector3(TravailInterieur.transform.position.x, 1.6f, TravailInterieur.transform.position.z);
             Office.SetActive(true);
             Rue.SetActive(false);
@@ -280,6 +291,7 @@ public class Player : MonoBehaviour
             if (this.gameObject.transform.position == new Vector3(TravailInterieur.transform.position.x, 1.6f, TravailInterieur.transform.position.z))
             {
                 CharacterController.enabled = true;
+                Input_Manager.enabled = true;
             }
         }
 
@@ -299,8 +311,9 @@ public class Player : MonoBehaviour
 
         if (LastObjectCollideName == "Sortir Travail")
         {
-            if( travail == false)
+            if ( travail == false)
             {
+                CharacterController.enabled = false;
                 this.gameObject.transform.position = new Vector3(TravailExterieur.transform.position.x, 1.6f, TravailExterieur.transform.position.z);
                 Office.SetActive(false);
                 Rue.SetActive(true);
@@ -308,6 +321,7 @@ public class Player : MonoBehaviour
                 if (this.gameObject.transform.position == new Vector3(TravailExterieur.transform.position.x, 1.6f, TravailExterieur.transform.position.z))
                 {
                     CharacterController.enabled = true;
+                    Input_Manager.enabled = true;
                 }
             }
             else
@@ -413,6 +427,62 @@ public class Player : MonoBehaviour
             }
         }
 
+        if (LastObjectCollideName == "Appeler psy")
+        {
+            if (Depression < 4)
+            {
+                InterractionMobilier.SetActive(true);
+                InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "J'ai plus besoin de psy";
+            }
+            else
+            {
+                MessageFinal.SetActive(true);
+                StopAllCoroutines();
+                MessageFinal.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = "Finalement, j'aurais peut-être pas dû arrêter les rendez vous...";
+                MessageFinal.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().font = NormalFont;
+                MessageFinal.transform.GetChild(0).gameObject.GetComponent<Button>().enabled = false;
+                END = true;
+                StartCoroutine(MessageFinalDisparition(2,1));
+            }
+        }
+        if (LastObjectCollideName == "Déménager")
+        {
+            if (Depression < 4)
+            {
+                InterractionMobilier.SetActive(true);
+
+                InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "Un déménagement, ça se prépare quand même !";
+            }
+            else
+            {
+                MessageFinal.SetActive(true);
+                StopAllCoroutines();
+                MessageFinal.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = "Au diable les préparatifs! J'ai besoin de m'en aller.";
+                MessageFinal.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().font = NormalFont;
+                MessageFinal.transform.GetChild(0).gameObject.GetComponent<Button>().enabled = false;
+                END = true;
+                StartCoroutine(MessageFinalDisparition(2, 1));
+            }
+        }
+        if (LastObjectCollideName == "Changer de travail")
+        {
+            if (Depression < 4)
+            {
+                InterractionMobilier.SetActive(true);
+
+                InteractionEcrireMobilier.GetComponent<TMP_Text>().text = "Ah ben non, j'ai enfin trouvé un travail pas loin de chez moi !";
+            }
+            else
+            {
+                MessageFinal.SetActive(true);
+                StopAllCoroutines();
+                MessageFinal.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = "Changer de travail, c'est vraiment ce dont j'ai besoin";
+                MessageFinal.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().font = NormalFont;
+                MessageFinal.transform.GetChild(0).gameObject.GetComponent<Button>().enabled = false;
+                END = true;
+                StartCoroutine(MessageFinalDisparition(2, 1));
+            }
+        }
     }
 
 
@@ -673,6 +743,7 @@ public class Player : MonoBehaviour
 
     public void OnSuicideDeath()
     {
+        EcranFin.transform.GetChild(1).gameObject.GetComponent<Text>().text = "C'était la seule solution.";
         EcranFin.SetActive(true);
         Fin.SetActive(true);
         MessageFinal.SetActive(false);
@@ -687,7 +758,7 @@ public class Player : MonoBehaviour
             MessageFinal.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = "En finir avec cette boucle ? Pourquoi tu me parles de ca ? Je vais bien !";
             MessageFinal.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().font = NormalFont;
             MessageFinal.transform.GetChild(0).gameObject.GetComponent<Button>().enabled = false;
-            StartCoroutine(MessageFinalDisparition(2));
+            StartCoroutine(MessageFinalDisparition(2,0));
         }
         else
         {
@@ -695,33 +766,60 @@ public class Player : MonoBehaviour
             MessageFinal.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().font = HorrorFont;
             MessageFinal.transform.GetChild(0).gameObject.GetComponent<Button>().enabled = false;
             END = true;
-            StartCoroutine(MessageFinalDisparition(2));
+            StartCoroutine(MessageFinalDisparition(2, 0));
         }
     }
 
-    IEnumerator MessageFinalDisparition(int time)
+    IEnumerator MessageFinalDisparition(int time, int endType)
     {
         yield return new WaitForSeconds(time);
         if (END)
         {
-            StartCoroutine(End());
+            StartCoroutine(End(endType));
         }
         else
         {
             MessageFinal.SetActive(false);
         }
     }
-    IEnumerator End()
+    IEnumerator End(int endType)
     {
-        Input_Manager.enabled = false;
-        gameObject.transform.position = new Vector3 (30, 1.5f, 49);
-        Vector3 pos = gameObject.transform.position;
-        yield return new WaitForSeconds(1f);
-        while (pos.x<55)
+        if (endType == 0)
         {
-            yield return new WaitForSeconds(0.01f);
-            CharacterController.Move(new Vector3(0, 0, 1) * speed * Time.deltaTime);
-            pos = gameObject.transform.position;
+            Input_Manager.enabled = false;
+            gameObject.transform.position = new Vector3(30, 1.5f, 49);
+            Vector3 pos = gameObject.transform.position;
+            yield return new WaitForSeconds(1f);
+            while (pos.x < 55)
+            {
+                yield return new WaitForSeconds(0.01f);
+                CharacterController.Move(new Vector3(0, 0, 1) * speed * Time.deltaTime);
+                pos = gameObject.transform.position;
+            }
+        }
+        else if (endType == 1)
+        {
+            Input_Manager.enabled = false;
+            EcranFin.SetActive(true);
+            EcranFin.transform.GetChild(1).gameObject.GetComponent<Text>().text = "Ma psy pense que changer encore de boulot va m'aider.";
+            Fin.SetActive(true);
+            MessageFinal.SetActive(false);
+        }
+        else if (endType == 2)
+        {
+            Input_Manager.enabled = false;
+            EcranFin.SetActive(true);
+            EcranFin.transform.GetChild(1).gameObject.GetComponent<Text>().text = "J'espère que tu ne me suivra pas.";
+            Fin.SetActive(true);
+            MessageFinal.SetActive(false);
+        }
+        else if (endType == 3)
+        {
+            Input_Manager.enabled = false;
+            EcranFin.SetActive(true);
+            EcranFin.transform.GetChild(1).gameObject.GetComponent<Text>().text = "Un nouveau boulot, pas de nouveau soucis, hein ?";
+            Fin.SetActive(true);
+            MessageFinal.SetActive(false);
         }
     }
 }

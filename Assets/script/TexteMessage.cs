@@ -19,8 +19,8 @@ public class TexteMessage : MonoBehaviour
 
         //Afficher à un endroit aléatoire entre les bornes x et y
 
-        float Randx = Random.RandomRange(500, 1400);
-        float Randy = Random.RandomRange(300, 850);
+        float Randx = Random.Range(500, 1400);
+        float Randy = Random.Range(300, 850);
        Bouger(Randx, Randy, 0);
     }
 
