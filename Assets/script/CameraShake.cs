@@ -30,6 +30,12 @@ public class CameraShake : MonoBehaviour
         camShake.m_AmplitudeGain = camShake.m_AmplitudeGain + Intensity;
     }
 
+    public void CameraShakeReset()
+    {
+        CinemachineBasicMultiChannelPerlin camShake = cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        camShake.m_AmplitudeGain = 0;
+    }
+
     public void ChangeCameraRotation(float value)
     {
         if (cam.GetCinemachineComponent<CinemachineComposer>().m_TrackedObjectOffset.y < 20)

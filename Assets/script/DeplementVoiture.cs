@@ -29,7 +29,7 @@ public class DeplementVoiture : MonoBehaviour
     void FixedUpdate()
     {
         body.AddForce(VitesseVoiture, 0, 0, ForceMode.Impulse);
-        this.gameObject.transform.localRotation = Quaternion.EulerRotation(new Vector3(0f, 80f, 0f));
+        this.gameObject.transform.localRotation = Quaternion.Euler(new Vector3(0f, 80f, 0f));
     }
 
 
@@ -38,14 +38,14 @@ public class DeplementVoiture : MonoBehaviour
     {
         if (collision.gameObject.tag == "VoitureFin" && VitesseVoiture < 0)
         {
-            Instantiate(Voiture, Voiture.transform.position = new Vector3(54.2f, 3.14f, 54.5f), Quaternion.EulerRotation(new Vector3(0f,90f,0f)));
+            Instantiate(Voiture, Voiture.transform.position = new Vector3(54.2f, 3.14f, 54.5f), Quaternion.Euler(new Vector3(0f,90f,0f)));
             Voiture.GetComponent<DeplementVoiture>().SetVitesseVOiture(-0.5f);
             Destroy(this.gameObject);
         }
 
         if (collision.gameObject.tag == "VoitureFinBis" && VitesseVoiture > 0)
         {
-            Instantiate(Voiture, Voiture.transform.position = new Vector3(-126.48f, 3.14f, 65.38f), Quaternion.EulerRotation(new Vector3(0f, 90f, 0f)));
+            Instantiate(Voiture, Voiture.transform.position = new Vector3(-126.48f, 3.14f, 65.38f), Quaternion.Euler(new Vector3(0f, 90f, 0f)));
             Voiture.GetComponent<DeplementVoiture>().SetVitesseVOiture(0.5f);
             Destroy(this.gameObject);
         }
