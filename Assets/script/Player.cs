@@ -802,7 +802,6 @@ public class Player : MonoBehaviour
             Input_Manager.enabled = false;
             EcranFin.SetActive(true);
             EcranFin.transform.GetChild(1).gameObject.GetComponent<Text>().text = "Ma psy pense que changer encore de boulot va m'aider.";
-            Fin.SetActive(true);
             MessageFinal.SetActive(false);
         }
         else if (endType == 2)
@@ -810,7 +809,6 @@ public class Player : MonoBehaviour
             Input_Manager.enabled = false;
             EcranFin.SetActive(true);
             EcranFin.transform.GetChild(1).gameObject.GetComponent<Text>().text = "J'espère que tu ne me suivra pas.";
-            Fin.SetActive(true);
             MessageFinal.SetActive(false);
         }
         else if (endType == 3)
@@ -818,7 +816,6 @@ public class Player : MonoBehaviour
             Input_Manager.enabled = false;
             EcranFin.SetActive(true);
             EcranFin.transform.GetChild(1).gameObject.GetComponent<Text>().text = "Un nouveau boulot, pas de nouveau soucis, hein ?";
-            Fin.SetActive(true);
             MessageFinal.SetActive(false);
         }
     }
