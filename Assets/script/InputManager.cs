@@ -21,30 +21,46 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void Move(InputAction.CallbackContext context)
     {
+        if (this.enabled)
+        {
+
+        }
         Direction = context.ReadValue<Vector2>();
         GameManager.Move(Direction);
     }
 
     public void Jump(InputAction.CallbackContext context)
     {
-        Jumping = context.ReadValueAsButton();
-        GameManager.Jump(Jumping);
+        if (this.enabled)
+        {
+            Jumping = context.ReadValueAsButton();
+            GameManager.Jump(Jumping);
+        }
+
     }
 
     public void DepressionGunShot(InputAction.CallbackContext context)
     {
-        Shooting = context.ReadValueAsButton();
-        GameManager.DepressionGunShot(Shooting);
+        if (this.enabled)
+        {
+            Shooting = context.ReadValueAsButton();
+            GameManager.DepressionGunShot(Shooting);
+        }
+
     }
 
-    public void CursorPosition(InputAction.CallbackContext context) 
+    public void CursorPosition(InputAction.CallbackContext context)
     {
-        CursorPositionVector = context.ReadValue<Vector2>();
-        GameManager.CursorPosition(CursorPositionVector);
+        if (this.enabled)
+        {
+            CursorPositionVector = context.ReadValue<Vector2>();
+            GameManager.CursorPosition(CursorPositionVector);
+        }
+
     }
 }

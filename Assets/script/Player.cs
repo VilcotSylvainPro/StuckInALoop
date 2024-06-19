@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 using UnityEngine.UI;
 using UnityEngine.XR;
 using System.Security.Cryptography;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 public class Player : MonoBehaviour
 {
@@ -48,6 +49,10 @@ public class Player : MonoBehaviour
     [SerializeField] private GameObject InteractionEcrireMobilier;
     [SerializeField] private GameObject MessageFinal;
     [SerializeField] private GameObject BoutonFinal;
+    [SerializeField] private GameObject EcranFin;
+    [SerializeField] private GameObject Fin;
+    [SerializeField] private Font NormalFont;
+    [SerializeField] private Font HorrorFont;
 
     [SerializeField] private GameObject EcranBoulot;
     [SerializeField] private GameObject EcranDodo;
@@ -71,6 +76,7 @@ public class Player : MonoBehaviour
     InputAction moving;
 
     [SerializeField] private CharacterController CharacterController;
+    [SerializeField] private InputManager Input_Manager;
     private Vector2 direction;
     [SerializeField] private bool TimerDeadActivation = false;
     [SerializeField] private float TimerDead = 0f;
@@ -99,13 +105,14 @@ public class Player : MonoBehaviour
 
     [SerializeField] private CameraShake CamShake;
 
+    private bool END;
     // Start is called before the first frame update
     void Start()
     {
         canvas = GameObject.Find("Canvas");
         finalBoutonTransform = MessageFinal.transform;
 
-        TempsAleatoire = Random.RandomRange(5, 15);
+        TempsAleatoire = Random.Range(5, 15);
         Debug.Log(TempsAleatoire);
         playerInput = GetComponent<PlayerInput>();
         moving = playerInput.actions.FindAction("Move");
@@ -126,23 +133,23 @@ public class Player : MonoBehaviour
             Respawn(SpawnPosition);
         }
 
-        if (CharacterController.enabled)
+        if (CharacterController.enabled && !END)
         {
             CharacterController.Move(new Vector3(direction.x, 0, direction.y) * speed * Time.deltaTime);
         }
 
         Debug.Log("Is grounded " + GroundController.isGrounded);
 
-        if (!GroundController.isGrounded && GroundForce.y > -0.05f && !InJump)
+        if (!GroundController.isGrounded && GroundForce.y > -0.05f && !InJump && !END)
         {
             GroundForce.y -= Gravity * Time.deltaTime;
         }
-        else if (InJump && GroundForce.y < 3)
+        else if (InJump && GroundForce.y < 3 && !END)
         {
             GroundForce.y = 0 + Gravity * Time.deltaTime;
         }
 
-        if (GroundController.enabled)
+        if (GroundController.enabled && !END)
         {
             GroundController.Move(GroundForce);
         }
@@ -435,12 +442,16 @@ public class Player : MonoBehaviour
             InteractionEcrire.GetComponent<TMP_Text>().text = collision.gameObject.name;
         }
 
-        if (collision.gameObject.GetComponent<DeplementVoiture>())
+        if (collision.gameObject.GetComponent<DeplementVoiture>() && Depression<4)
         {
             CharacterController.enabled = false;
             GroundController.enabled = false;
             Rigidbody.AddForce((transform.position - collision.transform.position) * 500 * Time.deltaTime, ForceMode.Impulse);
             TimerDeadActivation = true;
+        }
+        else if (collision.gameObject.GetComponent<DeplementVoiture>())
+        {
+            OnSuicideDeath();
         }
     }
 
@@ -559,7 +570,7 @@ public class Player : MonoBehaviour
                 int Rand = UnityEngine.Random.Range(0, MessageAEcrireBonMoral.Length);
 
                 MessageSecondaire.GetComponent<TexteMessage>().EcrireMessage(MessageAEcrireBonMoral[Rand]);
-                TempsAleatoire = Random.RandomRange(5, 10);
+                TempsAleatoire = Random.Range(5, 10);
 
             }
             if (Depression >= 4 && Depression < 8)
@@ -569,7 +580,7 @@ public class Player : MonoBehaviour
                 int Rand = UnityEngine.Random.Range(0, MessageAEcrireMoyenMoral.Length);
 
                 MessageSecondaire.GetComponent<TexteMessage>().EcrireMessage(MessageAEcrireMoyenMoral[Rand]);
-                TempsAleatoire = Random.RandomRange(4, 8);
+                TempsAleatoire = Random.Range(4, 8);
                 Debug.Log(TempsAleatoire);
 
             }
@@ -580,19 +591,19 @@ public class Player : MonoBehaviour
                 int Rand = UnityEngine.Random.Range(0, MessageAEcrireBadMoral.Length);
 
                 MessageSecondaire.GetComponent<TexteMessage>().EcrireMessage(MessageAEcrireBadMoral[Rand]);
-                TempsAleatoire = Random.RandomRange(4, 6);
+                TempsAleatoire = Random.Range(4, 6);
                 Debug.Log(TempsAleatoire);
 
             }
             if ( Depression >= 12)
             {
                 // MessageSecondaire;
-
+                TempsAleatoire = Random.Range(1, 2);
                 int Rand = UnityEngine.Random.Range(0, MessageAEcrireBadMoral.Length);
 
                 MessageSecondaire.GetComponent<TexteMessage>().EcrireMessage(MessageAEcrireBadMoral[Rand]);
                 //TempsAleatoire = Random.RandomRange(1, 1);
-                MessageFinal.SetActive(true);
+                //MessageFinal.SetActive(true);
                 Debug.Log(TempsAleatoire);
 
             }
@@ -658,5 +669,59 @@ public class Player : MonoBehaviour
     public void SetNbVictim(int value)
     {
         NbVictim += value;
+    }
+
+    public void OnSuicideDeath()
+    {
+        EcranFin.SetActive(true);
+        Fin.SetActive(true);
+        MessageFinal.SetActive(false);
+    }
+
+    public void Suicide()
+    {
+        MessageFinal.SetActive(true);
+        if (Depression <= 4)
+        {
+            StopAllCoroutines();
+            MessageFinal.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = "En finir avec cette boucle ? Pourquoi tu me parles de ca ? Je vais bien !";
+            MessageFinal.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().font = NormalFont;
+            MessageFinal.transform.GetChild(0).gameObject.GetComponent<Button>().enabled = false;
+            StartCoroutine(MessageFinalDisparition(2));
+        }
+        else
+        {
+            MessageFinal.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = "Tu as raison. Il est temps.";
+            MessageFinal.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().font = HorrorFont;
+            MessageFinal.transform.GetChild(0).gameObject.GetComponent<Button>().enabled = false;
+            END = true;
+            StartCoroutine(MessageFinalDisparition(2));
+        }
+    }
+
+    IEnumerator MessageFinalDisparition(int time)
+    {
+        yield return new WaitForSeconds(time);
+        if (END)
+        {
+            StartCoroutine(End());
+        }
+        else
+        {
+            MessageFinal.SetActive(false);
+        }
+    }
+    IEnumerator End()
+    {
+        Input_Manager.enabled = false;
+        gameObject.transform.position = new Vector3 (30, 1.5f, 49);
+        Vector3 pos = gameObject.transform.position;
+        yield return new WaitForSeconds(1f);
+        while (pos.x<55)
+        {
+            yield return new WaitForSeconds(0.01f);
+            CharacterController.Move(new Vector3(0, 0, 1) * speed * Time.deltaTime);
+            pos = gameObject.transform.position;
+        }
     }
 }

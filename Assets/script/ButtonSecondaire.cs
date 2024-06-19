@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ButtonSecondaire : MonoBehaviour
 {
@@ -24,15 +26,15 @@ public class ButtonSecondaire : MonoBehaviour
 
         //Supprimer le bouton
 
-        Destroy(BoutonASupprimer);
+        BoutonASupprimer.SetActive(false);
     }
 
     public void OnClickApplicationEnd()
     {
 
-        //Quitter le jeu
+        //Relance le jeu. En acord avec le thème, il n'est pas possible (in game) de quitter le jeu
 
-        Application.Quit();
+        SceneManager.LoadScene("SampleScene");
     }
 
 
